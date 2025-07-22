@@ -3,6 +3,7 @@ const path = require("node:path");
 const fs = require("node:fs");
 const pdfPoppler = require("pdf-poppler");
 const pdfParse = require('pdf-parse')
+const {formatExtractedText} = require("../../../../Shared/util/geminiUtils");
 
 
 // Model function to upload the resume/cv for a provided user
@@ -43,11 +44,14 @@ const cvUpload = async (originalname, mimetype, size, filePath, userId) => {
                             throw err
                         } else {
                             console.log('Updated the extracted text successfully! ', result);
-                            resolve(result);
                         }
                     }
                 )
-                // Further processing of extractedText can be done here
+
+                // Format the extracted text in a more human-readable format.
+                formatExtractedText(extractedText);
+
+
             })
             .catch(err => {
                 console.error('Failed to extract PDF data:', err);
