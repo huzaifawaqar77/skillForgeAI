@@ -1,5 +1,5 @@
-const express = require('express');
+const express = require("express");
+
 const app = express();
-const {createHttpProxyMiddleware} = require('http-proxy-middleware');
 
-
+// Proxy /auth request to Auth Service.

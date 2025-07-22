@@ -13,15 +13,17 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+
 const sendVerificationEmail = async (user) => {
     try {
         const verificationToken = jwt.sign({
             id: user.id,
             username: user.username,
             email: user.email,
-        }, jwtSecret, { expiresIn: '10m' });
+        }, jwtSecret, {expiresIn: '10m'});
 
         const verificationLink = `http://localhost:3001/verify?token=${verificationToken}`;
+
 
         const emailTemplate = `
         <!DOCTYPE html>
@@ -196,7 +198,9 @@ const sendVerificationEmail = async (user) => {
         // query the db and insert the token
         await new Promise((resolve, reject) => {
             pool.execute(
-                `UPDATE skillforge_user SET token = ? WHERE id = ?`,
+                `UPDATE skillforge_user
+                 SET token = ?
+                 WHERE id = ?`,
                 [verificationToken, user.id],
                 (err, result) => {
                     if (err) {

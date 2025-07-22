@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // api routes
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 
 app.listen(3001, (error) => {
   if (error) {

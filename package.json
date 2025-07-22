@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start_auth": "nodemon ./services/Auth Service/src/index.js"
+    "start": "nodemon index.js",
+    "ai-service": "nodemon \"services/AI Service/src/index.js\"",
+    "auth-service": "nodemon \"services/Auth Service/src/index.js\""
   },
   "keywords": [],
   "author": "",
@@ -16,14 +18,18 @@
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
+    "http-proxy-middleware": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
     "mysql2": "^3.14.2",
     "node-email-verifier": "^3.4.1",
-    "node-fetch": "^3.3.2",
     "nodemailer": "^7.0.5",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "pdf-parse": "^1.1.1",
+    "pdf-poppler": "^0.2.1",
+    "pdf-to-img": "^4.5.0"
   }
 }

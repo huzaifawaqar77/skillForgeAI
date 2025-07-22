@@ -1,5 +1,5 @@
 require("dotenv").config({
-  path: `${__dirname}/.env`,
+    path: `${__dirname}/.env`,
 });
 
 const port = process.env.DB_PORT;
@@ -36,29 +36,33 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 
+// Gemini API Key
+const geminiApiKey = process.env.GEMIN_API_KEY;
+
 module.exports = {
-  port,
-  host,
-  user,
-  password,
-  database,
-  queueLimit,
-  authRoute,
-  userRoute,
-  learningPathRoute,
-  aiRoute,
-  assessmentRoute,
-  chatRoute,
-  notificationRoute,
-  jwtSecret,
-  smtpHost,
-  smtpPort,
-  smtpUser,
-  smtpPassword,
-  smtpFrom,
-  smtpFromName,
-  googleClientId,
-  googleClientSecret,
-  githubClientId,
-  githubClientSecret,
+    port,
+    host,
+    user,
+    password,
+    database,
+    queueLimit,
+    authRoute,
+    userRoute,
+    learningPathRoute,
+    aiRoute,
+    assessmentRoute,
+    chatRoute,
+    notificationRoute,
+    jwtSecret,
+    smtpHost,
+    smtpPort,
+    smtpUser,
+    smtpPassword,
+    smtpFrom,
+    smtpFromName,
+    googleClientId,
+    googleClientSecret,
+    githubClientId,
+    githubClientSecret,
+    geminiApiKey
 };

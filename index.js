@@ -1,22 +1,41 @@
-const express = require('express');
+const express = require("express");
+const {createProxyMiddleware} = require("http-proxy-middleware");
+const path = require("node:path");
+
 const app = express();
-const pool = require("./Shared/Database/connection")
 
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Serve Static Files
+// serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Proxy /auth requests to Auth Service
+app.use(
+    "/auth",
+    createProxyMiddleware({
+        target: "http://localhost:3001",
+        changeOrigin: true,
+    })
+);
 
-app.listen(3000,
-    () => {
-        const testConnection = async () => {
-            try {
-                await pool.execute('SELECT 1');   // quick ping
-                console.log('✔ DB connection pool ready');
-            } catch (err) {
-                console.error('✖ Unable to reach MySQL:', err.message);
-                process.exit(1);                  // fail fast during startup
-            }
-        }
-        testConnection().then(r => console.log("✅ Server Started and listening on port 3000"));
-})
+// Proxy /ai requests to AI Service
+app.use(
+    "/ai",
+    createProxyMiddleware({
+        target: "http://localhost:3002",
+        changeOrigin: true,
+    })
+);
+
+// Add other service proxies here, for example:
+// app.use(
+//   "/users",
+//   createProxyMiddleware({
+//     target: "http://localhost:3002",
+//     changeOrigin: true,
+//   })
+// );
+
+app.listen(5000, () => {
+    console.log("✅ API Gateway started on port 5000");
+});
