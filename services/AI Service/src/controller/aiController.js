@@ -1,6 +1,7 @@
 const upload = require('../multerConfig');
 const multer = require('multer');
-const {cvUpload, fetchUserCV, fetchCVByID, storeCVImageToDB} = require('../model/aiModel');
+const {cvUploadModel, fetchUserCVModel, fetchCVByIDModel, storeCVImageToDBModel} = require('../model/aiModel');
+const {compareJobWithSkills} = require("../../../../Shared/util/geminiUtils");
 
 
 // Upload the Resume/CV for a given user
@@ -27,7 +28,7 @@ const cvUploadController = async (req, res) => {
         const {userId} = req.body;
 
         try {
-            const result = await cvUpload(originalname, mimetype, size, filePath, userId);
+            const result = await cvUploadModel(originalname, mimetype, size, filePath, userId);
             console.log("CV Upload result here: ", result);
             res.status(201).json({
                 success: true,
@@ -51,13 +52,13 @@ const cvUploadController = async (req, res) => {
 
 
 // Fetch All the Resume for a provided user
-const fetchCVForUser = async (req, res) => {
+const fetchCVForUserController = async (req, res) => {
     try {
         const {userId} = req.params;
         if (!userId) {
             return res.status(400).json({success: false, message: 'No user id provided.'});
         } else {
-            let result = await fetchUserCV(userId);
+            let result = await fetchUserCVModel(userId);
 
             return res.status(200).json({
                 success: true,
@@ -71,13 +72,13 @@ const fetchCVForUser = async (req, res) => {
 }
 
 // Fetch Resume/CV by its ID
-const fetchCVById = async (req, res) => {
+const fetchCVByIdController = async (req, res) => {
     try {
         const {id} = req.params;
         if (!id) {
             return res.status(400).json({success: false, message: 'No id provided.'});
         } else {
-            const result = await fetchCVByID(id);
+            const result = await fetchCVByIDModel(id);
             res.status(200).json({
                 success: true,
                 message: "Found cv for the given id",
@@ -89,8 +90,47 @@ const fetchCVById = async (req, res) => {
     }
 }
 
+// calculate the ATS score for a given Resume
+const calculateATSController = async (req, res) => {
+    try {
+
+
+        const {id} = req.params;
+        const {jobDescription} = req.body;
+
+        // Validate both jobDescription and ID.
+        if (!jobDescription || !id) {
+            res.status(400).json({success: false, message: 'Please provide a Job Description and Select a Resume/CV.'});
+        }
+
+        // Fetch the CV Details
+        const CV = await fetchCVByIDModel(id);
+
+        // Check if the CV contains the Skill Sets
+        const skillSets = CV[0] && CV[0].extracted_text;
+
+        if (skillSets) {
+            const ATS = await compareJobWithSkills(jobDescription, skillSets);
+            res.status(200).json({
+                success: true,
+                message: "Calculated the ATS Successfully!",
+                data: ATS
+            })
+        } else {
+            res.status(200).json({
+                success: true,
+                message: "No Skill Set was Found For this Resume",
+                data: null
+            })
+        }
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message});
+    }
+}
+
 module.exports = {
     cvUploadController,
-    fetchCVForUser,
-    fetchCVById
+    fetchCVForUserController,
+    fetchCVByIdController,
+    calculateATSController
 }
