@@ -95,7 +95,7 @@ Ensure the 'atsScore' is an integer between 0 and 100. Be precise and avoid hall
 
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-1.5-flash',
+            model: 'gemini-2.5-flash-lite',
             contents: prompt
         }); // Use a more capable model like 1.5-flash
 
@@ -123,7 +123,63 @@ Ensure the 'atsScore' is an integer between 0 and 100. Be precise and avoid hall
         throw error;
     }
 };
+
+
+const learningPathCreator = async (technology) => {
+    const prompt = `
+You are an expert curriculum designer.  
+Create a learning-path roadmap for **"${technology}"** that can be rendered as a directed graph (React-Flow compatible).
+
+Rules:
+1. Produce ONLY valid JSON. Do NOT wrap it in markdown or code fences.
+2. The top-level shape MUST be { "nodes": [...], "edges": [...] }.
+3. Nodes must contain:
+   - id           – short kebab-case string, unique
+   - type         – "start" for the very first node, "module" for the rest
+   - position     – { x, y } integers; keep y increasing per level
+   - data         – { label, level, description?, resources? }
+4. Levels: beginner → intermediate → advanced.  
+   Provide at least 3-5 modules per level.
+5. Edges must contain:
+   - id, source, target
+   - optional label or type for clarity
+6. Ensure every node except "start" has at least one incoming edge.
+
+Example snippet (do NOT copy the technology):
+{
+  "nodes": [
+    { "id": "start", "type": "start", "position": { "x": 0, "y": 0 }, "data": { "label": "Start React", "level": "beginner" } },
+    { "id": "jsx",  "type": "module", "position": { "x": 0, "y": 100 }, "data": { "label": "JSX & Components", "level": "beginner", "description": "...", "resources": ["https://react.dev"] } }
+  ],
+  "edges": [
+    { "id": "e-start-jsx", "source": "start", "target": "jsx" }
+  ]
+}
+`;
+
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash-lite',
+            contents: prompt
+        });
+
+        // Strip markdown fences if any
+        let raw = response.text.trim();
+        if (raw.startsWith('```json')) raw = raw.slice(7);
+        if (raw.endsWith('```')) raw = raw.slice(0, -3);
+        raw = raw.trim();
+
+        const graph = JSON.parse(raw);
+        return graph;
+    } catch (err) {
+        console.error('learningPathCreator error: ', err);
+        throw err;
+    }
+}
+
+
 module.exports = {
     formatExtractedText,
-    compareJobWithSkills
+    compareJobWithSkills,
+    learningPathCreator
 }

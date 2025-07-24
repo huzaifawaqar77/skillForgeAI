@@ -177,8 +177,33 @@ const storeCVImageToDBModel = async (imagePath, id) => {
 }
 
 // Calculate the ATS Based on a given pdf file.
-const calculateATSModel = async () => {
+const storeATSModel = async (ATS, jobDescription, id) => {
+    try {
 
+        let result;
+        result = await new Promise((resolve, reject) => {
+            pool.execute(
+                `UPDATE skillforge_documents
+                 SET ats             = ?,
+                     job_description = ?
+                 WHERE id = ?`,
+                [ATS, jobDescription, id],
+                (err, result) => {
+                    if (err) {
+                        console.error('Error in the storing of ats pool function')
+                        reject(err);
+                    } else {
+                        console.log("Successfully inserted the ats pool successfully", result);
+                        resolve(result);
+                    }
+                }
+            )
+        })
+        return result;
+    } catch (err) {
+        console.error('Error in the store ATS to db function: ', err);
+        throw err;
+    }
 }
 
 module.exports = {
@@ -186,14 +211,14 @@ module.exports = {
     fetchUserCVModel,
     fetchCVByIDModel,
     storeCVImageToDBModel,
-    calculateATSModel
+    storeATSModel
 }
 
 
 // ===================================Utility Functions=================================
 async function convertPdfToImage(pdfFilePath, outputDirectory, id) {
     // First, check if the image file already exists in the database.
-    const isImageExist = await fetchCVByID(id);
+    const isImageExist = await fetchCVByIDModel(id);
     if (isImageExist[0].image_path === null) {
         // Ensure output directory exists
         if (!fs.existsSync(outputDirectory)) {
@@ -212,7 +237,7 @@ async function convertPdfToImage(pdfFilePath, outputDirectory, id) {
         try {
             await pdfPoppler.convert(pdfFilePath, options);
             const imageUploadPath = "/uploads/images/" + options.out_prefix + "-1.jpg";
-            await storeCVImageToDB(imageUploadPath, id)
+            await storeCVImageToDBModel(imageUploadPath, id)
         } catch (error) {
             console.error('Error during PDF conversion:', error);
         }

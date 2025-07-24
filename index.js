@@ -27,14 +27,15 @@ app.use(
     })
 );
 
-// Add other service proxies here, for example:
-// app.use(
-//   "/users",
-//   createProxyMiddleware({
-//     target: "http://localhost:3002",
-//     changeOrigin: true,
-//   })
-// );
+// Proxy /assessment requests to Assessment Service
+app.use(
+    "/assessment",
+    createProxyMiddleware({
+        target: "http://localhost:3003",
+        changeOrigin: true,
+    })
+);
+
 
 app.listen(5000, () => {
     console.log("✅ API Gateway started on port 5000");

@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "ai-service": "nodemon \"services/AI Service/src/index.js\"",
-    "auth-service": "nodemon \"services/Auth Service/src/index.js\""
+    "auth-service": "nodemon \"services/Auth Service/src/index.js\"",
+    "assessment-service": "nodemon \"services/Assessment Service/src/index.js\""
   },
   "keywords": [],
   "author": "",

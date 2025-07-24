@@ -1,7 +1,13 @@
 const upload = require('../multerConfig');
 const multer = require('multer');
-const {cvUploadModel, fetchUserCVModel, fetchCVByIDModel, storeCVImageToDBModel} = require('../model/aiModel');
-const {compareJobWithSkills} = require("../../../../Shared/util/geminiUtils");
+const {
+    cvUploadModel,
+    fetchUserCVModel,
+    fetchCVByIDModel,
+    storeCVImageToDBModel,
+    storeATSModel
+} = require('../model/aiModel');
+const {compareJobWithSkills, learningPathCreator} = require("../../../../Shared/util/geminiUtils");
 
 
 // Upload the Resume/CV for a given user
@@ -94,7 +100,6 @@ const fetchCVByIdController = async (req, res) => {
 const calculateATSController = async (req, res) => {
     try {
 
-
         const {id} = req.params;
         const {jobDescription} = req.body;
 
@@ -106,21 +111,56 @@ const calculateATSController = async (req, res) => {
         // Fetch the CV Details
         const CV = await fetchCVByIDModel(id);
 
-        // Check if the CV contains the Skill Sets
-        const skillSets = CV[0] && CV[0].extracted_text;
-
-        if (skillSets) {
-            const ATS = await compareJobWithSkills(jobDescription, skillSets);
+        // After fetching CV Details, if ATS was calculated before
+        if (CV[0] && CV[0].ats && CV[0].job_description === jobDescription) {
             res.status(200).json({
                 success: true,
-                message: "Calculated the ATS Successfully!",
-                data: ATS
+                message: "Previously Calculated ATS already exists for this job description!.",
+                data: JSON.parse(CV[0].ats)
             })
         } else {
+            // Check if the CV contains the Skill Sets
+            const skillSets = CV[0] && CV[0].extracted_text;
+
+            if (skillSets) {
+                // compare the job description with your skills and get your ATS.
+                const ATS = await compareJobWithSkills(jobDescription, skillSets);
+                await storeATSModel(ATS, jobDescription, id);
+                res.status(200).json({
+                    success: true,
+                    message: "Calculated the ATS Successfully!",
+                    data: ATS
+                })
+            } else {
+                res.status(200).json({
+                    success: true,
+                    message: "No Skill Set was Found For this Resume",
+                    data: null
+                })
+            }
+        }
+
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message});
+    }
+}
+
+
+// Learning path creator controller function
+const learningPathCreatorController = async (req, res) => {
+    try {
+        const {technology} = req.body;
+        if (!technology) {
+            res.status(400).json({
+                success: false,
+                message: "You must provide the technology or subject on which you want to generate a learning path."
+            })
+        } else {
+            const learningPath = await learningPathCreator(technology);
             res.status(200).json({
                 success: true,
-                message: "No Skill Set was Found For this Resume",
-                data: null
+                message: "Learning path created successfully!",
+                data: learningPath
             })
         }
     } catch (error) {
@@ -132,5 +172,6 @@ module.exports = {
     cvUploadController,
     fetchCVForUserController,
     fetchCVByIdController,
-    calculateATSController
+    calculateATSController,
+    learningPathCreatorController
 }

@@ -3,8 +3,9 @@ const {
     cvUploadController,
     fetchCVForUserController,
     fetchCVByIdController,
-    calculateATSController
+    calculateATSController, learningPathCreatorController
 } = require("../controller/aiController");
+const {learningPathCreator} = require("../../../../Shared/util/geminiUtils");
 
 const router = express.Router();
 
@@ -19,7 +20,11 @@ router.get('/resumes/:userId', fetchCVForUserController)
 router.get('/resume/:id', fetchCVByIdController);
 
 // calculate the ATS scoring for a given resume/cv
-router.post('/resume/ats/:id', calculateATSController)
+router.post('/resume/ats/:id', calculateATSController);
+
+
+// Generate a Learning Path for a given technology
+router.post('/learning-path', learningPathCreatorController);
 
 module.exports = router;
 
