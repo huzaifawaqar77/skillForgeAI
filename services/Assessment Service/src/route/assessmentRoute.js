@@ -1,12 +1,9 @@
 const express = require('express');
+const {createAssessmentController} = require("../controller/assessmentController");
 
 const router = express.Router();
 
-router.get('/health', function (req, res) {
-    res.status(200).json({
-        success: true,
-        message: 'Hello World!'
-    })
-})
+// create an assessment for a given subject/topic/field
+router.post('/create-assessment', createAssessmentController)
 
 module.exports = router;

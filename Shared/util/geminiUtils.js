@@ -178,8 +178,126 @@ Example snippet (do NOT copy the technology):
 }
 
 
+const assessmentCreator = async (topic) => {
+    try {
+        if (!topic) {
+            throw new Error("You need to provide an assessment topic to get started");
+        }
+
+        // This prompt clearly defines the role, task, and required JSON structure.
+        const prompt = `
+        You are an expert curriculum developer and subject matter expert.
+        Your task is to create a multiple-choice assessment for the topic: "${topic}".
+
+        **Rules & Constraints:**
+
+        1.  Generate a total of 10 questions to form a comprehensive quiz.
+        2.  The questions should cover a range of difficulties from easy to moderate.
+        3.  For each question, provide 4 options.
+        4.  **Crucially, exactly one option must be correct.**
+        5.  Your entire output MUST be a single, valid JSON object and nothing else.
+        6.  The JSON object must follow this exact structure:
+            - A root object with two keys: "topic" and "questions".
+            - "questions" is an array of question objects.
+            - Each question object must contain:
+                - "id": A unique integer for the question (e.g., 1, 2, 3...).
+                - "questionText": The string for the question.
+                - "options": An array of 4 option objects.
+                - "explanation": A brief string explaining why the correct answer is right.
+            - Each option object must contain:
+                - "text": The string for the answer choice.
+                - "isCorrect": A boolean (true for the single correct answer, false for the others).
+
+        Here is an example of the required structure for one question:
+        {
+          "id": 1,
+          "questionText": "What is the primary function of a constructor in a class?",
+          "options": [
+            { "text": "To destroy the object", "isCorrect": false },
+            { "text": "To initialize a new object's state", "isCorrect": true },
+            { "text": "To perform a static operation", "isCorrect": false },
+            { "text": "To copy the object", "isCorrect": false }
+          ],
+          "explanation": "The constructor is a special method called automatically when a new object is created to set initial values for its properties."
+        }
+
+        Now, generate the complete JSON for the quiz on "${topic}".
+        `;
+
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash-lite',
+            contents: prompt
+        })
+
+        let raw = response.text.trim();
+        if (raw.startsWith('```json')) raw = raw.slice(7);
+        if (raw.endsWith('```')) raw = raw.slice(0, -3);
+        raw = raw.trim();
+
+        const assessment = JSON.parse(raw);
+        return assessment;
+    } catch (error) {
+        console.error('Failed to create Assessment for the given topic: ', error);
+        throw error;
+    }
+}
+
+
+const compareAssessmentTopics = async (source, target) => {
+    try {
+        if (!source || !target) {
+            throw new Error('Both source and target values are mandatory.');
+        }
+
+        // If target is an array of objects with a .topic field, flatten it.
+        const targetTopics = Array.isArray(target)
+            ? target.map(item => item.topic || item)
+            : [target];
+
+        // One-shot prompt that forbids any extra chat or prose.
+        const prompt = `
+Return ONLY the JSON value true or false, nothing else.
+
+Task:
+Determine whether the single topic "${source}" is **directly related** to any topic in the list ${JSON.stringify(targetTopics)}.
+
+Definition of "related":  
+- Same technology with identical depth (e.g., "NodeJS Basic" vs "NodeJS Basic") → true  
+- Same technology but different depth (e.g., "NodeJS Basic" vs "NodeJS Advanced") → false  
+- Completely different technologies → false  
+
+Answer with one JSON boolean value only.
+`.trim();
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash-lite',
+            contents: prompt
+        });
+
+        let raw = response.text.trim();
+
+        // Defensive cleanup: remove possible ```json``` fences.
+        raw = raw.replace(/^```(?:json)?\s*/i, '');
+        raw = raw.replace(/\s*```$/, '');
+        raw = raw.trim();
+
+        // Accept only the literal strings "true" or "false".
+        if (raw === 'true') return true;
+        if (raw === 'false') return false;
+
+        throw new Error(`Unexpected Gemini response: ${raw}`);
+    } catch (error) {
+        console.error('compareAssessmentTopics error:', error);
+        throw error;
+    }
+};
+
+
 module.exports = {
     formatExtractedText,
     compareJobWithSkills,
-    learningPathCreator
+    learningPathCreator,
+    assessmentCreator,
+    compareAssessmentTopics
 }
