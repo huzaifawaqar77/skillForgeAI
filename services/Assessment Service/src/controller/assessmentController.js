@@ -1,6 +1,6 @@
 // create assessment controller function
 const {assessmentCreator, compareAssessmentTopics} = require("../../../../Shared/util/geminiUtils");
-const {createAssessmentModel, fetchAssessments} = require("../model/assessmentModel");
+const {createAssessmentModel, fetchAssessments, submitAssessmentResultModel} = require("../model/assessmentModel");
 
 
 // Create assessment Controller Function.
@@ -54,4 +54,31 @@ const createAssessmentController = async (req, res) => {
     }
 }
 
-module.exports = {createAssessmentController};
+// Submit assessment Result Controller Function
+const submitAssessmentController = async (req, res) => {
+    try {
+        const {assessmentResult, assessmentId} = req.body;
+        if (!assessmentResult) {
+            return res.status(400).json({
+                success: false,
+                message: "No Assessment Result Provided"
+            })
+        }
+
+        // Store the assessment result in the database by passing it to the model
+        let result = await submitAssessmentResultModel(assessmentResult, assessmentId);
+        return res.status(200).json({
+            success: true,
+            message: "Successfully Submitted",
+            data: result
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
+}
+
+module.exports = {createAssessmentController, submitAssessmentController};
