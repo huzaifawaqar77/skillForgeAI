@@ -1,9 +1,13 @@
+import Hero from "@/components/home/Hero";
+import NavBar from "@/components/home/NavBar";
+import ProblemStatement from "@/components/home/ProblemStatement";
+
 export default function Home() {
     return (
         <main>
-            <h2 className="text-5xl font-bold text-emerald-500">
-                Hello Next.js!
-            </h2>
+            <NavBar/>
+            <Hero/>
+            <ProblemStatement/>
         </main>
     );
 }

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cambay:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Metamorphous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
 .page {
@@ -12,7 +13,7 @@
 
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Libre Franklin", serif
+    font-family: "Outfit", sans-serif;
 }
 
 p {
@@ -21,4 +22,12 @@ p {
 
 .fancy {
     font-family: "Metamorphous", serif;
+}
+
+.gradient-primary {
+    @apply bg-gradient-to-r from-teal-400 to-indigo-600 text-transparent bg-clip-text
+}
+
+.hero-section {
+    @apply lg:px-8 px-6 lg:py-20 py-20 space-y-2 max-w-[1600px] h-dvh;
 }

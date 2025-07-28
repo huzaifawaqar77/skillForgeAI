@@ -5,6 +5,14 @@ import AuthNature from "../../public/auth/auth-nature.jpg"
 import AuthImage from "../../public/auth/auth-image.jpg"
 import AuthRegister from "../../public/auth/auth-register.jpg"
 import FoxIcon from "../../public/icons/Fox.gif";
+import Hero1 from "../../public/hero/hero-1.jpg";
+import Hero2 from "../../public/hero/hero-2.jpg";
+import Hero3 from "../../public/hero/hero-3.jpg";
+import BurgerMenu from "../../public/icons/burger-menu.svg"
+import Cloud from "../../public/icons/cloud.svg";
+import LearningAmico from "../../public/icons/Learning-amico.svg";
+import InnovationAmico from "../../public/icons/Innovation-amico.svg"
+import BulbAmico from "../../public/icons/bulb-amico.svg"
 
 export {
     AuthSideImage,
@@ -13,5 +21,13 @@ export {
     AuthNature,
     AuthImage,
     AuthRegister,
-    FoxIcon
+    FoxIcon,
+    Hero1,
+    Hero2,
+    Hero3,
+    BurgerMenu,
+    Cloud,
+    LearningAmico,
+    InnovationAmico,
+    BulbAmico
 }
