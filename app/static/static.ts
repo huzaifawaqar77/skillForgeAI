@@ -13,6 +13,7 @@ import Cloud from "../../public/icons/cloud.svg";
 import LearningAmico from "../../public/icons/Learning-amico.svg";
 import InnovationAmico from "../../public/icons/Innovation-amico.svg"
 import BulbAmico from "../../public/icons/bulb-amico.svg"
+import PieChart from "../../public/icons/piechart.png"
 
 export {
     AuthSideImage,
@@ -29,5 +30,6 @@ export {
     Cloud,
     LearningAmico,
     InnovationAmico,
-    BulbAmico
+    BulbAmico,
+    PieChart,
 }

@@ -11,13 +11,23 @@ const Hero = () => {
 
     useEffect(() => {
         // GSAP animations setup
+
+        const tl = gsap.timeline();
         // Set initial positions and rotations
         gsap.set('.bulb', {
             x: 0,
             y: 0,
         });
 
-        gsap.set('.hero-heading', {
+        tl.set('.hero-heading', {
+            y: -40,
+            opacity: 0
+        })
+        tl.set('.hero-subheading', {
+            y: -40,
+            opacity: 0
+        })
+        tl.set('.hero-button', {
             y: -40,
             opacity: 0
         })
@@ -28,29 +38,32 @@ const Hero = () => {
             y: -10,
             x: -10,
             repeat: -1,
-            duration: 2,
+            duration: 0.2,
             stagger: 0.8,
             ease: "power1.inOut", // Correct GSAP ease syntax
             yoyo: true
         });
 
-        gsap.to('.hero-heading', {
+        tl.to('.hero-heading', {
             x: 0,
             y: 0,
             opacity: 1,
-            duration: 2,
+            duration: 0.5,
             ease: "power1.inOut"
+        }).to('.hero-subheading', {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power1.inOut"
+        }).to('.hero-button', {
+            x: 0,
+            y: 0,
+            opacity: 1,
+            duration: 0.2,
+            ease: "power4.inOut"
         })
 
-
-        // Animation for the button to pulse
-        gsap.to('.hero-button', {
-            scale: 1.05,
-            repeat: -1,
-            duration: 1.5,
-            ease: "power1.inOut",
-            yoyo: true
-        });
 
     }, []);
 
@@ -59,7 +72,7 @@ const Hero = () => {
     }
     return (
         <section
-            className={"hero-section container mx-auto flex flex-col lg:flex-row items-start justify-center gap-16 py-12 px-4 min-h-screen"}>
+            className={"hero-section container mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-16 py-12 px-4 min-h-screen"}>
 
             {/* Text Content Section */}
             <div className={"text-center lg:text-left max-w-2xl"}>
@@ -68,11 +81,11 @@ const Hero = () => {
                     with <span className={"text-amber-400"}>AI-Powered</span> <br/>
                     Skill Development
                 </h2>
-                <p className={"mt-6 text-lg md:text-xl text-gray-600"}>
+                <p className={"hero-subheading mt-6 text-lg md:text-xl text-gray-600"}>
                     Get personalized learning paths, AI mentoring, and industry-relevant
                     challenges that align with your career goals and market demands.
                 </p>
-                <p className={"text-sm mt-4 text-gray-500 italic"}>
+                <p className={"hero-subheading text-sm mt-4 text-gray-500 italic"}>
                     Join thousands of professionals staying ahead in the rapidly
                     evolving tech landscape.
                 </p>
