@@ -35,3 +35,42 @@ p {
 .problem-statement-section {
     @apply lg:px-8 px-6 lg:py-20 py-20 space-y-2 max-w-[1600px] h-dvh
 }
+
+.solution-overview-section {
+    @apply lg:px-8 px-6 lg:py-20 py-20 space-y-2 max-w-[1600px] h-dvh
+}
+
+.scroll-stack-card-1 {
+    background-image: url("../public/hero/personalized-analysis.svg");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.scroll-stack-card-2 {
+    background-image: url("../public/hero/learning-path.svg");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.scroll-stack-card-3 {
+    background-image: url("../public/hero/ai-mentor.svg");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.scroll-stack-card-4 {
+    background-image: url("../public/hero/real-world.svg");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.scroll-stack-card-5 {
+    background-image: url("../public/hero/future-proof-skills.svg");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}

@@ -14,6 +14,11 @@ import LearningAmico from "../../public/icons/Learning-amico.svg";
 import InnovationAmico from "../../public/icons/Innovation-amico.svg"
 import BulbAmico from "../../public/icons/bulb-amico.svg"
 import PieChart from "../../public/icons/piechart.png"
+import FutureProofSkills from "../../public/hero/future-proof-skills.svg"
+import AIMentor from "../../public/hero/ai-mentor.svg"
+import LearningPath from "../../public/hero/learning-path.svg"
+import PersonalizedAnalysis from "../../public/hero/personalized-analysis.svg"
+import RealWorld from "../../public/hero/real-world.svg";
 
 export {
     AuthSideImage,
@@ -32,4 +37,9 @@ export {
     InnovationAmico,
     BulbAmico,
     PieChart,
+    FutureProofSkills,
+    AIMentor,
+    LearningPath,
+    PersonalizedAnalysis,
+    RealWorld,
 }

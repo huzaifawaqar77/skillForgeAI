@@ -95,7 +95,8 @@ const ProblemStatement = () => {
                 </p>
 
             </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-2 h-96 ">
+            {/*Card Contents*/}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-2 h-96 z-30 ">
                 <CardSpotlight className="problem-statement-card h-full space-y-6">
 
                     <div className={"flex items-center justify-center p-2"}>
