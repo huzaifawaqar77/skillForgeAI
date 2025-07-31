@@ -82,14 +82,14 @@ const Hero = () => {
     }
     return (
         <section
-            className={"hero-section container mx-auto flex flex-col items-start gap-16 py-12 px-4 min-h-screen"}>
+            className={"hero-section container mx-auto flex flex-col items-start justify-between px-4 min-h-screen"}>
 
-            <div className={"mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-16 "}>
+            <div className={"mx-auto flex flex-col lg:flex-row items-center lg:items-start gap-16"}>
                 {/* Text Content Section */}
                 <div className={"text-center lg:text-left max-w-2xl"}>
                     <h2 className={"hero-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"}>
                         Transform Your Career <br/>
-                        with <span className={"text-amber-400"}>AI-Powered</span> <br/>
+                        with <span className={"gradient-primary"}>AI-Powered</span> <br/>
                         Skill Development
                     </h2>
                     <p className={"hero-subheading mt-6 text-lg md:text-xl text-gray-600"}>
@@ -103,7 +103,7 @@ const Hero = () => {
 
                     {/* CTA Button */}
                     <Button
-                        className={"hero-button mt-8 px-12 py-6 bg-amber-400 text-white text-xl font-semibold rounded-lg shadow-lg  transition-all duration-300"}>
+                        className={"hero-button mt-8 px-12 py-6 bg-gradient-to-br from-teal-400 to-indigo-600 text-white text-xl font-semibold rounded-lg shadow-lg  transition-all duration-300"}>
                         Get Started For Free
                     </Button>
                 </div>
