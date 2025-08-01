@@ -19,6 +19,14 @@ import AIMentor from "../../public/hero/ai-mentor.svg"
 import LearningPath from "../../public/hero/learning-path.svg"
 import PersonalizedAnalysis from "../../public/hero/personalized-analysis.svg"
 import RealWorld from "../../public/hero/real-world.svg";
+import StarFilled from "../../public/icons/star_filled.svg";
+import StarHalfFilled from "../../public/icons/star_half_empty.svg";
+
+
+import Avatar1 from "../../public/avatars/avatar1.jpg"
+import Avatar2 from "../../public/avatars/avatar2.jpg"
+import Avatar3 from "../../public/avatars/avatar3.jpg"
+import Avatar4 from "../../public/avatars/avatar4.jpg"
 
 export {
     AuthSideImage,
@@ -42,4 +50,10 @@ export {
     LearningPath,
     PersonalizedAnalysis,
     RealWorld,
+    Avatar4,
+    Avatar3,
+    Avatar2,
+    Avatar1,
+    StarHalfFilled,
+    StarFilled
 }

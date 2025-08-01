@@ -122,25 +122,25 @@ const HowItWorks = () => {
             title: "Step 1",
             description: "Complete Your Profile",
             text: "Tell us about your background, current skills, and career aspirations.",
-            color: "bg-gradient-to-br from-orange-500 to-red-700 shadow-sm shadow-orange-500"
+            color: "bg-gradient-to-br from-orange-500 to-yellow-400 shadow-sm shadow-orange-500"
         },
         {
             title: "Step 2",
             description: "Get Your AI Analysis",
             text: "Our AI creates your personalized skill map and identifies growth opportunities.",
-            color: "bg-gradient-to-br from-emerald-500 to-green-700 shadow-sm shadow-emerald-500"
+            color: "bg-gradient-to-br from-emerald-500 to-green-500 shadow-sm shadow-emerald-500"
         },
         {
             title: "Step 3",
             description: "Follow Your Learning Path",
             text: "Access curated content, practice challenges, and AI mentoring tailored to you.",
-            color: "bg-gradient-to-br from-blue-500 to-purple-700 shadow-sm shadow-blue-500"
+            color: "bg-gradient-to-br from-blue-500 to-violet-500 shadow-sm shadow-blue-500"
         },
         {
             title: "Step 4",
             description: "Track Your Progress",
             text: "Monitor your skill development and see how you're advancing toward your goals.",
-            color: "bg-gradient-to-br from-gray-500 to-zinc-200 shadow-sm shadow-gray-500"
+            color: "bg-gradient-to-br from-gray-500 to-zinc-500 shadow-sm shadow-gray-500"
         }
     ]
     return (

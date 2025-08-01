@@ -33,7 +33,8 @@ const SolutionOverview = () => {
                 trigger: ".solution-overview-section",
                 start: "top 70%",
                 end: "top 10%",
-                scrub: true
+                scrub: true,
+
             }
         });
 
@@ -69,7 +70,8 @@ const SolutionOverview = () => {
             </div>
 
             {/*Solution Cards*/}
-            <div className="grid grid-cols-1 divide-y divide-gray-200 md:grid-cols-2 xl:grid-cols-4 gap-4 my-6">
+            <div
+                className="grid grid-cols-1 divide-y divide-gray-200 md:grid-cols-2 xl:grid-cols-4 gap-4 my-6">
                 <SolutionCard imgSrc={PersonalizedAnalysis} title={"Personalized Analysis"}
                               description={"AI analyzes your current skills and industry trends"}/>
 

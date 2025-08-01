@@ -9,6 +9,7 @@ import {ScrollTrigger} from "gsap/all";
 import {BulbAmico, Cloud, Hero1, Hero2, Hero3, InnovationAmico, LearningAmico} from "@/app/static/static";
 import {Button} from "@/components/ui/button";
 import CurvedLoop from "@/components/CurvedLoop";
+import {Vortex} from "@/components/ui/vortex";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -100,7 +101,10 @@ const Hero = () => {
                         Join thousands of professionals staying ahead in the rapidly
                         evolving tech landscape.
                     </p>
-
+                    <Vortex
+                        backgroundColor={"transparent"}
+                        className={"w-screen h-full z-0"}
+                    />
                     {/* CTA Button */}
                     <Button
                         className={"hero-button mt-8 px-12 py-6 bg-gradient-to-br from-teal-400 to-indigo-600 text-white text-xl font-semibold rounded-lg shadow-lg  transition-all duration-300"}>

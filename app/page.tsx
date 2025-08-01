@@ -4,6 +4,9 @@ import ProblemStatement from "@/components/home/ProblemStatement";
 import SolutionOverview from "@/components/home/SolutionOverview";
 import HowItWorks from "@/components/home/HowItWorks";
 import Footer from "@/components/home/Footer";
+import SocialProof from "@/components/home/SocialProof";
+import FAQ from "@/components/home/FAQ";
+import FinalCTA from "@/components/home/FinalCTA";
 
 export default function Home() {
     return (
@@ -13,6 +16,9 @@ export default function Home() {
             <ProblemStatement/>
             <SolutionOverview/>
             <HowItWorks/>
+            <SocialProof/>
+            <FAQ/>
+            <FinalCTA/>
             <Footer/>
         </main>
     );
