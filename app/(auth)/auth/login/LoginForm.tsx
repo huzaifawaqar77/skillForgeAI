@@ -19,6 +19,12 @@ import {Input} from "@/components/ui/input"
 import Image from "next/image";
 import Link from "next/link";
 
+// Import the Cookie so that we can set a cookie when we LOGIN successfully
+import Cookies from 'js-cookie';
+import api from "../../../../services/api";
+
+import {useRouter} from "next/navigation"
+
 import {GoogleIcon, GithubIcon} from "@/app/static/static";
 
 const formSchema = z.object({
@@ -27,6 +33,8 @@ const formSchema = z.object({
 })
 
 const LoginForm = () => {
+
+    const navigate = useRouter();
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
@@ -38,13 +46,20 @@ const LoginForm = () => {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values);
-        alert(
-            JSON.stringify(values)
-        )
+        const response = await api.post("/auth/login", {
+            email: values.email,
+            password: values.password,
+        })
+
+        // Store the jwt Token in the Cookies for the middleware to function correctly
+        Cookies.set("token", response.data.token);
+
+        // navigate the user to the dashboard page
+        navigate.push("/dashboard");
     }
 
 
