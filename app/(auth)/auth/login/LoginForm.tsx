@@ -49,7 +49,6 @@ const LoginForm = () => {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values);
         const response = await api.post("/auth/login", {
             email: values.email,
             password: values.password,
